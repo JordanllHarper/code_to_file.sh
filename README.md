@@ -24,17 +24,11 @@ where ... are the required arguments:
 For a Swift project with a path at `~/MySwiftProjects/ThisIsAGoodOne/` and a save path of `~/CodeFilesInMarkdown.md`:
 
 `./code_files.sh ~/MySwiftProjects/ThisIsAGoodOne ~/CodeFilesInMarkdown.md swift`
-                                            |           |- save path        |- file extension                       
-                                            |
-                                            |-project path
 
 
 Multiple file types:
 
 `./code_files.sh ~/MyAndroidProjects/ThisIsAGREATOne ~/CodeFilesInMarkdown.md kt java`
-                                            |            |- save path          |- file extension                       
-                                            |
-                                            |-project path
 
 > [!NOTE]
 > Projects may contain contents you would like to ignore. This script doesn't currently support ignoring directories (but is a planned feature!). For now, best to do is remove those files and copy just the source files. 
