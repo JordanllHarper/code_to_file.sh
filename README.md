@@ -10,25 +10,33 @@ You can either *yoink* the script code straight from this repository and make yo
 
 Using the script is the same as invoking any other shell script:
 
-`./code_files.sh ...`
+`./code_files.sh [OPTIONS] [ARGUMENTS]`
 
-where ... are the required arguments:
+OPTIONS:
 
-- the path to the root of your project.
-- a path where you want to save. This implicitly also includes how you want to save (recommended: `.txt` or `.md`).
-- a list of file types you want to **include**.
+-f - [f]iletype to include. At least 1 of these is *required*.
+
+-p - [p]attern to exclude. Optional.
+
+ARGUMENTS:
+
+/path/to/start - where to start parsing files from
+
+/path/to/save - where to save the contents to.
+
+> [!NOTE]
+> This also implicitly includes how you will save your files. Recommended filetypes are `.txt` and `.md`.
 
 
 ## Examples
 
-For a Swift project with a path at `~/MySwiftProjects/ThisIsAGoodOne/` and a save path of `~/CodeFilesInMarkdown.md`:
+For a Swift project with a path at `~/MySwiftProjects/ThisIsAGoodIdea/` and a save path of `~/CodeFilesInMarkdown.md`:
 
-`./code_files.sh ~/MySwiftProjects/ThisIsAGoodOne ~/CodeFilesInMarkdown.md swift`
-
+`./code_files.sh -f swift ~/MySwiftProjects/ThisIsAGoodOne ~/CodeFilesInMarkdown.md`
 
 Multiple file types:
 
-`./code_files.sh ~/MyAndroidProjects/ThisIsAGREATOne ~/CodeFilesInMarkdown.md kt java`
+`./code_files.sh -f kt -f java ~/MyAndroidProjects/ThisIsAGREATIdea ~/CodeFilesInMarkdown.md`
 
 > [!NOTE]
 > Projects may contain contents you would like to ignore. This script doesn't currently support ignoring directories (but is a planned feature!). For now, best to do is remove those files and copy just the source files. 
@@ -36,6 +44,6 @@ Multiple file types:
 
 ## Motivation 
 
-If you're a student and need to copy your code into a word document (like I have done), then you'll know how painful (and stressful!) needing to copy all your code into documents is.
+If you're a student and need to copy your code into a document, then you'll know how painful (and stressful!) needing to copy all your code into documents is.
 
 This script solves that problem. You don't need to worry about if you've missed files, or have changed something and now need to redo the whole copying process all over again.
