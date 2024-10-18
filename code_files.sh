@@ -30,6 +30,13 @@ recurse_directories () {
     local contents=""
     for path in $1/* 
     do 
+        for pat in ${patterns_to_ignore[@]} 
+        do 
+            if [[ "$path" =~ $pat ]]; then
+               continue 2 
+            fi
+        done
+
         if [[ -d $path ]]; then
             contents="$contents$(recurse_directories $path)"
 
@@ -50,9 +57,10 @@ recurse_directories () {
     echo "$contents"
 }
 
-while getopts "f:" flag; do
+while getopts ":p:f:" flag; do
     case "${flag}" in
         p)
+
             patterns_to_ignore+=(${OPTARG})
             ;;
 
@@ -84,6 +92,10 @@ if [[ -z $file_types ]]; then
     print_usage
     exit 1
 fi
+
+echo "Looking for the following file types: ${patterns_to_ignore[@]}"
+echo "Ignoring the following patterns: ${patterns_to_ignore[@]}"
+
 
 result=$(recurse_directories $file_path $path_to_save)
 echo "$result" > "$path_to_save"
