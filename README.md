@@ -27,7 +27,6 @@ ARGUMENTS:
 > [!NOTE]
 > This also implicitly includes how you will save your files. Recommended filetypes are `.txt` and `.md`.
 
-
 ## Examples
 
 For a Swift project with a path at `~/MySwiftProjects/ThisIsAGoodIdea/` and a save path of `~/CodeFilesInMarkdown.md`:
@@ -38,9 +37,9 @@ Multiple file types:
 
 `./code_files.sh -f kt -f java ~/MyAndroidProjects/ThisIsAGREATIdea ~/CodeFilesInMarkdown.md`
 
-> [!NOTE]
-> Projects may contain contents you would like to ignore. This script doesn't currently support ignoring directories (but is a planned feature!). For now, best to do is remove those files and copy just the source files. 
-> Then add them back in to keep functionality.
+Ignoring build files:
+
+`./code_files.sh -f rs -f md -f toml -p target/ -p lock ~/MyRustProjectsBTW/BestIdeaEver ~/code_files.md`
 
 ## Motivation 
 
