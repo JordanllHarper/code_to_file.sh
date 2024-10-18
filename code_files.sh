@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 
-patterns_to_ignore=
-file_types=
+patterns_to_ignore=()
+file_types=()
 
-file_path=$1
-path_to_save=$2
+file_path=${@: -2}
+path_to_save=${@: -1}
 
 print_usage () { 
     echo "
     USAGE: 
     
-    code_to_files [OPTIONS] [ARGUMENTS]
+    code_to_files [OPTIONS] [ARGUMENTS] 
 
     ARGUMENTS:
     
@@ -20,27 +20,11 @@ print_usage () {
 
     OPTIONS:
 
-    -p  patterns to ignore
-    -f  file extensions to include
+    -p  pattern to ignore
+    -f  file extension to include
     "
 }
 
-while getopts 'pf' flag; do
-    case "${flag}" in
-        p)
-            patterns_to_ignore="${OPTARG}"
-            ;;
-
-        f)
-            file_types="${OPTARG}"
-            ;;
-        *)
-            echo "Unknown option"
-            print_usage
-            exit 1
-            ;;
-    esac
-done
 
 recurse_directories () {
     local contents=""
@@ -51,7 +35,7 @@ recurse_directories () {
 
         # File handling          
         elif [[ -f $path ]]; then
-            for ft in $file_types 
+            for ft in ${file_types[@]}
             do
                 file_extension="${path##*.}"
                 if [[ $file_extension == $ft ]]; then
@@ -66,7 +50,43 @@ recurse_directories () {
     echo "$contents"
 }
 
+while getopts "f:" flag; do
+    case "${flag}" in
+        p)
+            patterns_to_ignore+=(${OPTARG})
+            ;;
 
-result=$(recurse_directories $file_path)
+        f)
+            file_types+=(${OPTARG})
+            ;;
+        *)
+            echo "Unknown option"
+            print_usage
+            exit 1
+            ;;
+    esac
+done
+
+if [[ -z $file_path ]]; then
+    echo "Error: You need to include the path to start scanning for files"
+    print_usage
+    exit 1
+fi
+
+if [[ -z $path_to_save ]]; then
+    echo "Error: You need to include the path to save your file to"
+    print_usage
+    exit 1
+fi
+
+if [[ -z $file_types ]]; then
+    echo "Error: Include the file types you want to be captured with -f extension_one -f extension_two "
+    print_usage
+    exit 1
+fi
+
+result=$(recurse_directories $file_path $path_to_save)
 echo "$result" > "$path_to_save"
-echo "Parsing complete and written to: $path_to_save"
+echo "
+   Parsing complete and written to: $path_to_save
+"
