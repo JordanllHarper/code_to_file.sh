@@ -88,12 +88,12 @@ if [[ -z $path_to_save ]]; then
 fi
 
 if [[ -z $file_types ]]; then
-    echo "Error: Include the file types you want to be captured with -f extension_one -f extension_two "
+    echo "Error: Include the file types you want to be captured with e.g. -f extension_one -f extension_two "
     print_usage
     exit 1
 fi
 
-echo "Looking for the following file types: ${patterns_to_ignore[@]}"
+echo "Looking for the following file types: ${file_types[@]}"
 echo "Ignoring the following patterns: ${patterns_to_ignore[@]}"
 
 
